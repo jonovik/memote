@@ -23,3 +23,6 @@ Test suite for an instance of `cobra.Model`.
 
 from __future__ import absolute_import
 
+from os.path import join, dirname
+
+TEST_DIRECTORY = join(dirname(__file__), "tests")

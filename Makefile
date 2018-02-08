@@ -33,14 +33,12 @@ clean-build: ## remove build artifacts
 	rm -fr build/
 	rm -fr dist/
 	rm -fr .eggs/
-	find . -name '*.egg-info' -exec rm -fr {} +
-	find . -name '*.egg' -exec rm -f {} +
+	find . -name '*.egg-info' -exec rm -rf {} +
+	find . -name '*.egg' -exec rm -rf {} +
 
 clean-pyc: ## remove Python file artifacts
-	find . -name '*.pyc' -exec rm -f {} +
-	find . -name '*.pyo' -exec rm -f {} +
-	find . -name '*~' -exec rm -f {} +
-	find . -name '__pycache__' -exec rm -fr {} +
+	find . -type f -name '*.py[co]' -delete
+	find . -type d -name '__pycache__' -delete
 
 clean-test: ## remove test and coverage artifacts
 	rm -fr .tox/
@@ -51,7 +49,7 @@ lint: ## check style with flake8
 	flake8 memote tests
 
 test: ## run tests quickly with the default Python
-	py.test
+	pytest tests/
 
 test-all: ## run tests on every Python version with tox
 	tox
@@ -63,9 +61,6 @@ coverage: ## check code coverage quickly with the default Python
 		$(BROWSER) htmlcov/index.html
 
 docs: ## generate Sphinx HTML documentation, including API docs
-	rm -f docs/memote.rst
-	rm -f docs/modules.rst
-	sphinx-apidoc -o docs/ memote
 	$(MAKE) -C docs clean
 	$(MAKE) -C docs html
 	$(BROWSER) docs/_build/html/index.html
@@ -74,12 +69,14 @@ servedocs: docs ## compile the docs watching for changes
 	watchmedo shell-command -p '*.rst' -c '$(MAKE) -C docs html' -R -D .
 
 release: clean ## package and upload a release
-	python setup.py sdist upload
-	python setup.py bdist_wheel upload
+	python setup.py sdist bdist_wheel upload
 
-dist: clean ## builds source and wheel package
-	python setup.py sdist
-	python setup.py bdist_wheel
+reports:
+	$(MAKE) -C memote-report-app bundle
+	cp memote-report-app/build/index.html memote/suite/reporting/templates/snapshot.html
+
+dist: clean reports ## builds source and wheel package
+	python setup.py sdist bdist_wheel
 	ls -l dist
 
 install: clean ## install the package to the active Python's site-packages

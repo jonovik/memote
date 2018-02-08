@@ -1,15 +1,34 @@
-* memote version:
-* Python version:
-* Operating System:
+#### Problem description
 
-### Description
+Please explain:
+* **what** you tried to achieve,
+* **how** you went about it (referring to the code sample), and
+* **why** the current behaviour is a problem and what output
+  you expected instead.
 
-Describe what you were trying to get done.
-Tell us what happened, what went wrong, and what you expected to happen.
+#### Code Sample
 
-### What I Did
+Create a [minimal, complete, verifiable example
+](https://stackoverflow.com/help/mcve).
 
+```python
+# Paste your code here or link to a gist.
 ```
-Paste the command(s) you ran and the output.
-If there was a crash, please include the traceback here.
+
+```bash
+# If there was a crash, please include the traceback here.
 ```
+
+### Context
+
+Please run the following code and paste the output inside the details
+block.
+
+```python
+import memote
+memote.show_versions()
+```
+
+<details>
+
+</details>
