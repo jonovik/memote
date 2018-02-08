@@ -50,8 +50,8 @@ class SnapshotReport(Report):
         to a full Angular based report.
         """
         # template = self.env.get_template("snapshot.html")
-        with io.open(join(dirname(__file__), "../templates/snapshot.html")) as \
-                file_handle:
+        with io.open(join(dirname(__file__), "../templates/snapshot.html"),
+                     encoding="utf-8") as file_handle:
             template = Template(file_handle.read())
         try:
             return template.safe_substitute(
